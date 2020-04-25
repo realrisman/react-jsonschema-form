@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from "@material-ui/core/Checkbox";
+import FormControl from "@material-ui/core/FormControl";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
-import { WidgetProps } from '@rjsf/core';
+import { WidgetProps } from "@realrisman/rjsf-core";
 
 const CheckboxWidget = (props: WidgetProps) => {
   const {
@@ -34,7 +34,7 @@ const CheckboxWidget = (props: WidgetProps) => {
         control={
           <Checkbox
             id={id}
-            checked={typeof value === 'undefined' ? false : value}
+            checked={typeof value === "undefined" ? false : value}
             required={required}
             disabled={disabled || readonly}
             autoFocus={autofocus}

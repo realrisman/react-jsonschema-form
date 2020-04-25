@@ -1,5 +1,4 @@
-react-jsonschema-form
-=====================
+# react-jsonschema-form
 
 [![Build Status](https://travis-ci.org/mozilla-services/react-jsonschema-form.svg)](https://travis-ci.org/mozilla-services/react-jsonschema-form)
 
@@ -24,11 +23,10 @@ Requires React 16.0.0+.
 
 > Note: The `master` branch of the repository reflects ongoing development. Releases are published as [tags](https://github.com/mozilla-services/react-jsonschema-form/releases). You should never blindly install from `master`, but rather check what the available stable releases are.
 
-
 ### As a npm-based project dependency
 
 ```bash
-$ npm install @rjsf/core --save
+$ npm install @realrisman/rjsf-core --save
 ```
 
 > Note: While the library renders [Bootstrap](http://getbootstrap.com/) HTML semantics, you have to build and load the Bootstrap styles on your own.
@@ -36,7 +34,7 @@ $ npm install @rjsf/core --save
 ### As a script served from a CDN
 
 ```html
-  <script src="https://unpkg.com/react-jsonschema-form/dist/react-jsonschema-form.js"></script>
+<script src="https://unpkg.com/react-jsonschema-form/dist/react-jsonschema-form.js"></script>
 ```
 
 Source maps are available at [this url](https://unpkg.com/react-jsonschema-form/dist/react-jsonschema-form.js.map).
@@ -48,7 +46,7 @@ You'll also need to alias the default export property to use the Form component:
 ```jsx
 const Form = JSONSchemaForm.default;
 // or
-const {default: Form} = JSONSchemaForm;
+const { default: Form } = JSONSchemaForm;
 ```
 
 ## Usage
@@ -57,26 +55,29 @@ const {default: Form} = JSONSchemaForm;
 import React, { Component } from "react";
 import { render } from "react-dom";
 
-import Form from "@rjsf/core";
+import Form from "@realrisman/rjsf-core";
 
 const schema = {
   title: "Todo",
   type: "object",
   required: ["title"],
   properties: {
-    title: {type: "string", title: "Title", default: "A new task"},
-    done: {type: "boolean", title: "Done?", default: false}
-  }
+    title: { type: "string", title: "Title", default: "A new task" },
+    done: { type: "boolean", title: "Done?", default: false },
+  },
 };
 
 const log = (type) => console.log.bind(console, type);
 
-render((
-  <Form schema={schema}
-        onChange={log("changed")}
-        onSubmit={log("submitted")}
-        onError={log("errors")} />
-), document.getElementById("app"));
+render(
+  <Form
+    schema={schema}
+    onChange={log("changed")}
+    onSubmit={log("submitted")}
+    onError={log("errors")}
+  />,
+  document.getElementById("app")
+);
 ```
 
 This will generate a form like this (assuming you loaded the standard [Bootstrap](http://getbootstrap.com/) stylesheet):
@@ -90,13 +91,13 @@ Often you'll want to prefill a form with existing data; this is done by passing 
 ```jsx
 const formData = {
   title: "First task",
-  done: true
+  done: true,
 };
 
-render((
-  <Form schema={schema}
-        formData={formData} />
-), document.getElementById("app"));
+render(
+  <Form schema={schema} formData={formData} />,
+  document.getElementById("app")
+);
 ```
 
 > Note: If your form has a single field, pass a single value to `formData`. ex: `formData='Charlie'`
@@ -110,12 +111,12 @@ render((
 You can pass a function as the `onSubmit` prop of your `Form` component to listen to when the form is submitted and its data are valid. It will be passed a result object having a `formData` attribute, which is the valid form data you're usually after. The original event will also be passed as a second parameter:
 
 ```js
-const onSubmit = ({formData}, e) => console.log("Data submitted: ",  formData);
+const onSubmit = ({ formData }, e) => console.log("Data submitted: ", formData);
 
-render((
-  <Form schema={schema}
-        onSubmit={onSubmit} />
-), document.getElementById("app"));
+render(
+  <Form schema={schema} onSubmit={onSubmit} />,
+  document.getElementById("app")
+);
 ```
 
 > Note: If there are fields in the `formData` that are not represented in the schema, they will be retained by default. If you would like to remove those extra values on form submission, then set the `omitExtraData` prop to `true`. Set the `liveOmit` prop to true in order to remove extra data upon form data change.
@@ -125,12 +126,13 @@ render((
 To react when submitted form data are invalid, pass an `onError` handler. It will be passed the list of encountered errors:
 
 ```js
-const onError = (errors) => console.log("I have", errors.length, "errors to fix");
+const onError = (errors) =>
+  console.log("I have", errors.length, "errors to fix");
 
-render((
-  <Form schema={schema}
-        onError={onError} />
-), document.getElementById("app"));
+render(
+  <Form schema={schema} onError={onError} />,
+  document.getElementById("app")
+);
 ```
 
 #### Form data changes
@@ -148,17 +150,24 @@ Sometimes you may want to trigger events or modify external state when a field h
 Sometimes you may want to trigger events or modify external state when a field has been focused, so you can pass an `onFocus` handler, which will receive the id of the input that is focused and the field value.
 
 ### Submit form programmatically
+
 You can use the reference to get your `Form` component and call the `submit` method to submit the form programmatically without a submit button.
 This method will dispatch the `submit` event of the form, and the function, that is passed to `onSubmit` props, will be called.
 
 ```js
-const onSubmit = ({formData}) => console.log("Data submitted: ",  formData);
+const onSubmit = ({ formData }) => console.log("Data submitted: ", formData);
 let yourForm;
 
-render((
-  <Form schema={schema}
-        onSubmit={onSubmit} ref={(form) => {yourForm = form;}}/>
-), document.getElementById("app"));
+render(
+  <Form
+    schema={schema}
+    onSubmit={onSubmit}
+    ref={(form) => {
+      yourForm = form;
+    }}
+  />,
+  document.getElementById("app")
+);
 
 yourForm.submit();
 ```
@@ -179,24 +188,23 @@ Here are some examples from the [playground](https://rjsf-team.github.io/react-j
 
 Last, if you really really want to override the semantics generated by the lib, you can always create and use your own custom [widget](advanced-customization.md#custom-widget-components), [field](advanced-customization.md#custom-field-components) and/or [schema field](advanced-customization.md#custom-schemafield) components.
 
-
 ## JSON Schema supporting status
 
 This component follows [JSON Schema](http://json-schema.org/documentation.html) specs. We currently support JSON Schema-07 by default, but we also support other JSON schema versions through the [custom schema validation](https://react-jsonschema-form.readthedocs.io/en/latest/validation/#custom-schema-validation) feature. Due to the limitation of form widgets, there are some exceptions as follows:
 
-* `additionalItems` keyword for arrays
+- `additionalItems` keyword for arrays
 
-    This keyword works when `items` is an array. `additionalItems: true` is not supported because there's no widget to represent an item of any type. In this case it will be treated as no additional items allowed. `additionalItems` being a valid schema is supported.
+  This keyword works when `items` is an array. `additionalItems: true` is not supported because there's no widget to represent an item of any type. In this case it will be treated as no additional items allowed. `additionalItems` being a valid schema is supported.
 
-* `anyOf`, `allOf`, and `oneOf`, or multiple `types` (i.e. `"type": ["string", "array"]`)
+- `anyOf`, `allOf`, and `oneOf`, or multiple `types` (i.e. `"type": ["string", "array"]`)
 
-    The `anyOf` and `oneOf` keywords are supported; however, properties declared inside the `anyOf/oneOf` should not overlap with properties "outside" of the `anyOf/oneOf`.
+  The `anyOf` and `oneOf` keywords are supported; however, properties declared inside the `anyOf/oneOf` should not overlap with properties "outside" of the `anyOf/oneOf`.
 
-    You can also use `oneOf` with [schema dependencies](dependencies.md#schema-dependencies) to dynamically add schema properties based on input data.
+  You can also use `oneOf` with [schema dependencies](dependencies.md#schema-dependencies) to dynamically add schema properties based on input data.
 
-    The `allOf` keyword is supported; it uses [json-schema-merge-allof](https://github.com/mokkabonna/json-schema-merge-allof) to merge subschemas to render the final combined schema in the form. When these subschemas are incompatible, though (or if the library has an error merging it), the `allOf` keyword is dropped from the schema. 
+  The `allOf` keyword is supported; it uses [json-schema-merge-allof](https://github.com/mokkabonna/json-schema-merge-allof) to merge subschemas to render the final combined schema in the form. When these subschemas are incompatible, though (or if the library has an error merging it), the `allOf` keyword is dropped from the schema.
 
-* `"additionalProperties":false` produces incorrect schemas when used with [schema dependencies](#schema-dependencies). This library does not remove extra properties, which causes validation to fail. It is recommended to avoid setting `"additionalProperties":false` when you use schema dependencies. See [#848](https://github.com/mozilla-services/react-jsonschema-form/issues/848) [#902](https://github.com/mozilla-services/react-jsonschema-form/issues/902) [#992](https://github.com/mozilla-services/react-jsonschema-form/issues/992)
+- `"additionalProperties":false` produces incorrect schemas when used with [schema dependencies](#schema-dependencies). This library does not remove extra properties, which causes validation to fail. It is recommended to avoid setting `"additionalProperties":false` when you use schema dependencies. See [#848](https://github.com/mozilla-services/react-jsonschema-form/issues/848) [#902](https://github.com/mozilla-services/react-jsonschema-form/issues/902) [#992](https://github.com/mozilla-services/react-jsonschema-form/issues/992)
 
 ## Handling of schema defaults
 
@@ -210,9 +218,9 @@ Check out the defaults example on the [live playground](https://mozilla-services
 
 There are three different cases which need to be considered for the merging. Objects, arrays and scalar values. This library always deeply merges any defaults with the existing form data for objects.
 
-This are the rules which are used when injecting the defaults: 
+This are the rules which are used when injecting the defaults:
 
-- When the is a scalar in the form data, nothing is changed. 
+- When the is a scalar in the form data, nothing is changed.
 - When the value is `undefined` in the form data, the default is created in the form data.
 - When the value is an object in the form data, the defaults are deeply merged into the form data, using the rules defined here for the deep merge.
 - Then the value is an array in the form data, defaults are only injected in existing array items. No new array items will be created, even if the schema has minItems or additional items defined.
@@ -225,18 +233,18 @@ For arrays this is not the case. Defining an array, when a parent also defines a
 
 ## Tips and tricks
 
- - Custom field template: <https://jsfiddle.net/hdp1kgn6/1/>
- - Multi-step wizard: <https://jsfiddle.net/sn4bnw9h/1/>
- - Using classNames with uiSchema: <https://jsfiddle.net/gfwp25we/1/>
- - Conditional fields: <https://jsfiddle.net/69z2wepo/88541/>
- - Advanced conditional fields: <https://jsfiddle.net/cowbellerina/zbfh96b1/>
- - Use radio list for enums: <https://jsfiddle.net/f2y3fq7L/2/>
- - Reading file input data: <https://jsfiddle.net/f9vcb6pL/1/>
- - Custom errors messages with transformErrors: <https://jsfiddle.net/revolunet/5r3swnr4/>
- - 2 columns form with CSS and FieldTemplate: <https://jsfiddle.net/n1k0/bw0ffnz4/1/>
- - Validate and submit form from external control: <https://jsfiddle.net/spacebaboon/g5a1re63/>
- - Custom component for Help text with `ui:help`: <https://codesandbox.io/s/14pqx97xl7/>
- - Collapsing / Showing and Hiding individual fields: <https://codesandbox.io/s/examplereactjsonschemaformcollapsefieldtemplate-t41dn>
+- Custom field template: <https://jsfiddle.net/hdp1kgn6/1/>
+- Multi-step wizard: <https://jsfiddle.net/sn4bnw9h/1/>
+- Using classNames with uiSchema: <https://jsfiddle.net/gfwp25we/1/>
+- Conditional fields: <https://jsfiddle.net/69z2wepo/88541/>
+- Advanced conditional fields: <https://jsfiddle.net/cowbellerina/zbfh96b1/>
+- Use radio list for enums: <https://jsfiddle.net/f2y3fq7L/2/>
+- Reading file input data: <https://jsfiddle.net/f9vcb6pL/1/>
+- Custom errors messages with transformErrors: <https://jsfiddle.net/revolunet/5r3swnr4/>
+- 2 columns form with CSS and FieldTemplate: <https://jsfiddle.net/n1k0/bw0ffnz4/1/>
+- Validate and submit form from external control: <https://jsfiddle.net/spacebaboon/g5a1re63/>
+- Custom component for Help text with `ui:help`: <https://codesandbox.io/s/14pqx97xl7/>
+- Collapsing / Showing and Hiding individual fields: <https://codesandbox.io/s/examplereactjsonschemaformcollapsefieldtemplate-t41dn>
 
 ## FAQ
 

@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
-import { FieldTemplateProps } from '@rjsf/core';
+import { FieldTemplateProps } from "@realrisman/rjsf-core";
 
-import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Typography from '@material-ui/core/Typography';
+import FormControl from "@material-ui/core/FormControl";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import Typography from "@material-ui/core/Typography";
 
 const FieldTemplate = ({
   id,

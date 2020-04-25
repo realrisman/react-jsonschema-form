@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/styles';
+import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@material-ui/styles";
 
-import { ObjectFieldTemplateProps } from '@rjsf/core';
+import { ObjectFieldTemplateProps } from "@realrisman/rjsf-core";
 
 const useStyles = makeStyles({
   root: {
@@ -25,7 +25,7 @@ const ObjectFieldTemplate = ({
 
   return (
     <>
-      {(uiSchema['ui:title'] || title) && (
+      {(uiSchema["ui:title"] || title) && (
         <TitleField
           id={`${idSchema.$id}-title`}
           title={title}
@@ -44,8 +44,7 @@ const ObjectFieldTemplate = ({
             item={true}
             xs={12}
             key={index}
-            style={{ marginBottom: '10px' }}
-          >
+            style={{ marginBottom: "10px" }}>
             {element.content}
           </Grid>
         ))}

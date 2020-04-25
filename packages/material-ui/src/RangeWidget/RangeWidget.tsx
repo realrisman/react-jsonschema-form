@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
-import FormControl from '@material-ui/core/FormControl';
-import Grid from '@material-ui/core/Grid';
-import Slider from '@material-ui/core/Slider';
-import FormLabel from '@material-ui/core/FormLabel';
+import FormControl from "@material-ui/core/FormControl";
+import Grid from "@material-ui/core/Grid";
+import Slider from "@material-ui/core/Slider";
+import FormLabel from "@material-ui/core/FormLabel";
 
-import { utils } from '@rjsf/core';
-import { WidgetProps } from '@rjsf/core';
+import { utils } from "@realrisman/rjsf-core";
+import { WidgetProps } from "@realrisman/rjsf-core";
 
 const { rangeSpec } = utils;
 
@@ -29,7 +29,7 @@ const RangeWidget = ({
   let sliderProps = { value, label, id, ...rangeSpec(schema) };
 
   const _onChange = ({}, value: any) =>
-    onChange(value === '' ? options.emptyValue : value);
+    onChange(value === "" ? options.emptyValue : value);
   const _onBlur = ({ target: { value } }: React.FocusEvent<HTMLInputElement>) =>
     onBlur(id, value);
   const _onFocus = ({
@@ -41,8 +41,7 @@ const RangeWidget = ({
       <FormControl
         fullWidth={true}
         //error={!!rawErrors}
-        required={required}
-      >
+        required={required}>
         <FormLabel id={id}>{label}</FormLabel>
         <Slider
           {...sliderProps}

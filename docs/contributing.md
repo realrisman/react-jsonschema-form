@@ -47,9 +47,8 @@ npm test
 
 #### Code coverage
 
-Code coverage reports are currently available only for the `@rjsf/core` package. They are generated using [nyc](https://github.com/istanbuljs/nyc) each time the `npm test-coverage` script is run.
+Code coverage reports are currently available only for the `@realrisman/rjsf-core` package. They are generated using [nyc](https://github.com/istanbuljs/nyc) each time the `npm test-coverage` script is run.
 The full report can be seen by opening `./coverage/lcov-report/index.html`.
-
 
 ### Releasing
 

@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import { WidgetProps } from '@rjsf/core';
+import { WidgetProps } from "@realrisman/rjsf-core";
 
-import FormControl from '@material-ui/core/FormControl';
-import TextField from '@material-ui/core/TextField';
+import FormControl from "@material-ui/core/FormControl";
+import TextField from "@material-ui/core/TextField";
 
 type CustomWidgetProps = WidgetProps & {
   options: any;
@@ -27,7 +27,7 @@ const TextareaWidget = ({
   const _onChange = ({
     target: { value },
   }: React.ChangeEvent<HTMLInputElement>) =>
-    onChange(value === '' ? options.emptyValue : value);
+    onChange(value === "" ? options.emptyValue : value);
   const _onBlur = ({ target: { value } }: React.FocusEvent<HTMLInputElement>) =>
     onBlur(id, value);
   const _onFocus = ({
@@ -38,8 +38,7 @@ const TextareaWidget = ({
     <FormControl
       fullWidth={true}
       //error={!!rawErrors}
-      required={required}
-    >
+      required={required}>
       <TextField
         id={id}
         label={label || schema.title}
